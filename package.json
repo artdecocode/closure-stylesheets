@@ -1,6 +1,6 @@
 {
   "name": "closure-stylesheets",
-  "version": "0.0.0-pre",
+  "version": "0.0.0",
   "description": "A Fork Of Google Closure Stylesheets With Improvements.",
   "main": "build/index.js",
   "module": "src/index.js",
