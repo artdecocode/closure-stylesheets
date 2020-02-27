@@ -34,7 +34,10 @@
   },
   "typedefs": "typedefs.json",
   "keywords": [
-    "closure-stylesheets"
+    "closure-stylesheets",
+    "closure",
+    "css",
+    "stylesheets"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "AGPL-3.0",
