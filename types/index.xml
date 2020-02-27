@@ -1,5 +1,5 @@
 <types ns="_artdeco">
-  <record name="ClosureStylesheetsConfig">
+  <record name="ClosureStylesheetsConfig" desc="Configuration options.">
     <prop string name="path">
       The path to the closure JAR. You can use `closure-stylesheets-java` package
       to install it via Node.

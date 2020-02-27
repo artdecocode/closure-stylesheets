@@ -8,15 +8,15 @@ import closureStylesheets, { closureStylesheetsSync } from 'closure-stylesheets'
 
 %~%
 
-<typedef name="closureStylesheets">types/api.xml</typedef>
+<typedef name="compileStylesheets">types/api.xml</typedef>
 
-%TYPEDEF types/index.xml%
+<typedef narrow>types/index.xml</typedef>
 
 The sync version with the same API is also available.
 
 %~%
 
-<typedef name="closureStylesheetsSync">types/api.xml</typedef>
+<typedef name="compileStylesheetsSync">types/api.xml</typedef>
 
 <!-- %EXAMPLE: example, ../src => closure-stylesheets%
 %FORK example% -->

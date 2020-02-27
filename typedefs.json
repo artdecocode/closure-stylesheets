@@ -1,10 +1,18 @@
 {
   "_artdeco.ClosureStylesheetsConfig": {
     "link": "https://github.com/artdecocode/closure-stylesheets#type-closurestylesheetsconfig",
-    "description": null
+    "description": "Configuration options."
   },
   "_artdeco.ClosureReturn": {
     "link": "https://github.com/artdecocode/closure-stylesheets#type-closurereturn",
     "description": "Returns stylesheet and rename map if successful, or parsed info, stderr and status otherwise."
+  },
+  "_artdeco.compileStylesheets": {
+    "link": "https://github.com/artdecocode/closure-stylesheets#async-compilestylesheetscss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn",
+    "description": "Compiles stylesheets asynchronously."
+  },
+  "_artdeco.compileStylesheetsSync": {
+    "link": "https://github.com/artdecocode/closure-stylesheets#compilestylesheetssynccss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn",
+    "description": "Compiles stylesheets in a sync manner."
   }
 }

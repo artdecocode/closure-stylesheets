@@ -12,8 +12,10 @@ yarn add closure-stylesheets
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
+- [`async compileStylesheets(css: (string|!Array<string>), config: !ClosureStylesheetsConfig, log=: !Function): ClosureReturn`](#async-compilestylesheetscss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn)
   * [`ClosureStylesheetsConfig`](#type-closurestylesheetsconfig)
   * [`ClosureReturn`](#type-closurereturn)
+- [`compileStylesheetsSync(css: (string|!Array<string>), config: !ClosureStylesheetsConfig, log=: !Function): ClosureReturn`](#compilestylesheetssynccss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents">
@@ -32,38 +34,265 @@ import closureStylesheets, { closureStylesheetsSync } from 'closure-stylesheets'
   <img src="/.documentary/section-breaks/1.svg?sanitize=true">
 </a></p>
 
+## <code>async <ins>compileStylesheets</ins>(</code><sub><br/>&nbsp;&nbsp;`css: (string|!Array<string>),`<br/>&nbsp;&nbsp;`config: !ClosureStylesheetsConfig,`<br/>&nbsp;&nbsp;`log=: !Function,`<br/></sub><code>): <i>ClosureReturn</i></code>
+Compiles stylesheets asynchronously.
 
+ - <kbd><strong>css*</strong></kbd> <em><code>(string \| !Array&lt;string&gt;)</code></em>: The resolved path to the CSS file to compile.
+ - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-closurestylesheetsconfig" title="Configuration options.">!ClosureStylesheetsConfig</a></code></em>: Additional configuration to transform into arguments to Java.
+Requires at list path to the JAR file.
+ - <kbd>log</kbd> <em>`!Function`</em> (optional): The logging function.
 
-__<a name="type-closurestylesheetsconfig">`ClosureStylesheetsConfig`</a>__
+__<a name="type-closurestylesheetsconfig">`ClosureStylesheetsConfig`</a>__: Configuration options.
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+  <th>Default</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center"><strong>path*</strong></td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   The path to the closure JAR. You can use <code>closure-stylesheets-java</code> package
+   to install it via Node.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">skipHTMLEscaping</td>
+  <td><em>boolean</em></td>
+  <td rowSpan="3"><code>false</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   By default, the compiler will escape <code>[&lt;&gt;\"&']</code> from output
+   to make it suitable for safe embedding in HTML tags and attributes.
+   When standalone CSS is generated, this is not necessary and can be skipped.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">expandBrowserPrefix</td>
+  <td><em>boolean</em></td>
+  <td rowSpan="3"><code>false</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Expand CSS rules to include vendor-prefixed declarations.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">outputBrowserPrefix</td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   The location of the file where to output the prefixed version of the CSS.
+   Works only when <code>expandBrowserPrefix</code> is set.
+   The filename should end with <code>.css</code> and the compiler will also create a <code>.json</code> file
+   at the same location with the map to check for support.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">prefixes</td>
+  <td><em>!Array&lt;string&gt;</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   CSS rule prefixes (<code>position:sticky</code>, <code>-ms-hyphens</code>.) to include in the main output CSS rather than browser prefix file.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">prettyPrint</td>
+  <td><em>boolean</em></td>
+  <td rowSpan="3"><code>false</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Whether to format the output with newlines and indents so that it is more readable.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">sourceMap</td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Provides a mapping from the generated output to their original source code location.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">rootSelector</td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   The string to prepend to selectors of each ruleset.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">allowUnrecognizedProperties</td>
+  <td><em>boolean</em></td>
+  <td rowSpan="3"><code>false</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Allow unrecognized properties.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">preserveImportantComments</td>
+  <td><em>boolean</em></td>
+  <td rowSpan="3"><code>false</code></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Preserve important comments from sources into minified output css. Important comments are marked with <code>/＊! ＊/</code>, <code>＠license</code>, or <code>＠preserve</code>.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">cssRenamingPrefix</td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Add a prefix to all renamed css class names.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">whitelist</td>
+  <td><em>!Array&lt;string&gt;</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Excluded classes from renaming.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">outputRenamingMap</td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   How to format the output from the CSS class renaming.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">inputRenamingMap</td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   The input filename for the CSS class renaming. The file must provide a map of class names that will be used for renaming. If a class name is not found in file, a new name will be generated.
+   <code>--input-renaming-map</code>
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">rename</td>
+  <td><em>string</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   How CSS classes should be renamed. Defaults to NONE.
+   Can be <code>CLOSURE</code>, <code>SIMPLE</code>, <code>DEBUG</code>.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">excludedClassesFromRenaming</td>
+  <td><em>!Array&lt;string&gt;</em></td>
+  <td rowSpan="3">-</td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Pass the compiler a list of CSS class names that shouldn't be renamed.
+  </td>
+ </tr>
+</table>
 
-|            Name             |             Type              |                                                                                                                                   Description                                                                                                                                    | Default |
-| --------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| __path*__                   | <em>string</em>               | The path to the closure JAR. You can use `closure-stylesheets-java` package<br/>to install it via Node.                                                                                                                                                                          | -       |
-| skipHTMLEscaping            | <em>boolean</em>              | By default, the compiler will escape `[<>\"&']` from output<br/>to make it suitable for safe embedding in HTML tags and attributes.<br/>When standalone CSS is generated, this is not necessary and can be skipped.                                                              | `false` |
-| expandBrowserPrefix         | <em>boolean</em>              | Expand CSS rules to include vendor-prefixed declarations.                                                                                                                                                                                                                        | `false` |
-| outputBrowserPrefix         | <em>string</em>               | The location of the file where to output the prefixed version of the CSS.<br/>Works only when `expandBrowserPrefix` is set.<br/>The filename should end with `.css` and the compiler will also create a `.json` file<br/>at the same location with the map to check for support. | -       |
-| prefixes                    | <em>!Array&lt;string&gt;</em> | CSS rule prefixes (`position:sticky`, `-ms-hyphens`.) to include in the main output CSS rather than browser prefix file.                                                                                                                                                         | -       |
-| prettyPrint                 | <em>boolean</em>              | Whether to format the output with newlines and indents so that it is more readable.                                                                                                                                                                                              | `false` |
-| sourceMap                   | <em>string</em>               | Provides a mapping from the generated output to their original source code location.                                                                                                                                                                                             | -       |
-| rootSelector                | <em>string</em>               | The string to prepend to selectors of each ruleset.                                                                                                                                                                                                                              | -       |
-| allowUnrecognizedProperties | <em>boolean</em>              | Allow unrecognized properties.                                                                                                                                                                                                                                                   | `false` |
-| preserveImportantComments   | <em>boolean</em>              | Preserve important comments from sources into minified output css. Important comments are marked with `/＊! ＊/`, `＠license`, or `＠preserve`.                                                                                                                                      | `false` |
-| cssRenamingPrefix           | <em>string</em>               | Add a prefix to all renamed css class names.                                                                                                                                                                                                                                     | -       |
-| whitelist                   | <em>!Array&lt;string&gt;</em> | Excluded classes from renaming.                                                                                                                                                                                                                                                  | -       |
-| outputRenamingMap           | <em>string</em>               | How to format the output from the CSS class renaming.                                                                                                                                                                                                                            | -       |
-| inputRenamingMap            | <em>string</em>               | The input filename for the CSS class renaming. The file must provide a map of class names that will be used for renaming. If a class name is not found in file, a new name will be generated.<br/>`--input-renaming-map`                                                         | -       |
-| rename                      | <em>string</em>               | How CSS classes should be renamed. Defaults to NONE.<br/>Can be `CLOSURE`, `SIMPLE`, `DEBUG`.                                                                                                                                                                                    | -       |
-| excludedClassesFromRenaming | <em>!Array&lt;string&gt;</em> | Pass the compiler a list of CSS class names that shouldn't be renamed.                                                                                                                                                                                                           | -       |
 
 __<a name="type-closurereturn">`ClosureReturn`</a>__: Returns stylesheet and rename map if successful, or parsed info, stderr and status otherwise.
-
-|    Name    |      Type       |                             Description                              |
-| ---------- | --------------- | -------------------------------------------------------------------- |
-| block      | <em>string</em> | Parsed error information with CLI colour.                            |
-| stderr     | <em>string</em> | Full stderr output in case of error.                                 |
-| status     | <em>number</em> | Exit error code.                                                     |
-| renameMap  | <em>Object</em> | If renaming was on, this is the generated map parsed into an object. |
-| stylesheet | <em>string</em> | The actual compiled stylesheet in case of success.                   |
+<table>
+ <thead><tr>
+  <th>Name</th>
+  <th>Type &amp; Description</th>
+ </tr></thead>
+ <tr>
+  <td rowSpan="3" align="center">block</td>
+  <td><em>string</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Parsed error information with CLI colour.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">stderr</td>
+  <td><em>string</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Full stderr output in case of error.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">status</td>
+  <td><em>number</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   Exit error code.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">renameMap</td>
+  <td><em>Object</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   If renaming was on, this is the generated map parsed into an object.
+  </td>
+ </tr>
+ <tr>
+  <td rowSpan="3" align="center">stylesheet</td>
+  <td><em>string</em></td>
+ </tr>
+ <tr></tr>
+ <tr>
+  <td>
+   The actual compiled stylesheet in case of success.
+  </td>
+ </tr>
+</table>
 
 The sync version with the same API is also available.
 
@@ -71,7 +300,13 @@ The sync version with the same API is also available.
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
+## <code><ins>compileStylesheetsSync</ins>(</code><sub><br/>&nbsp;&nbsp;`css: (string|!Array<string>),`<br/>&nbsp;&nbsp;`config: !ClosureStylesheetsConfig,`<br/>&nbsp;&nbsp;`log=: !Function,`<br/></sub><code>): <i>ClosureReturn</i></code>
+Compiles stylesheets in a sync manner.
 
+ - <kbd><strong>css*</strong></kbd> <em><code>(string \| !Array&lt;string&gt;)</code></em>: The resolved path to the CSS file to compile.
+ - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-closurestylesheetsconfig" title="Configuration options.">!ClosureStylesheetsConfig</a></code></em>: Additional configuration to transform into arguments to Java.
+Requires at list path to the JAR file.
+ - <kbd>log</kbd> <em>`!Function`</em> (optional): The logging function.
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/3.svg?sanitize=true">

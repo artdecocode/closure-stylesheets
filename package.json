@@ -24,7 +24,8 @@
   "files": [
     "build",
     "src",
-    "types/externs.js"
+    "types",
+    "typedefs.json"
   ],
   "externs": "types/externs.js",
   "repository": {
@@ -40,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/artdecocode/closure-stylesheets/issues"
   },
-  "homepage": "https://github.com/artdecocode/closure-stylesheets#readme",
+  "homepage": "https://www.artd.eco",
   "devDependencies": {
     "alamode": "^3.5.2",
     "depack": "^1.1.2",
