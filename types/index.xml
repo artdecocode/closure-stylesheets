@@ -1,9 +1,12 @@
 <types ns="_artdeco">
-  <type name="ClosureStylesheetsConfig">
+  <record name="ClosureStylesheetsConfig">
     <prop string name="path">
       The path to the closure JAR. You can use `closure-stylesheets-java` package
       to install it via Node.
     </prop>
+    <arg opt type="string?" name="rootSelector">
+      The parent class name to prepend to all rules. This makes all CSS rules scoped into that particular selector which is useful for compiling widgets.
+    </arg>
     <prop boolean name="skipHTMLEscaping" default="false">
       By default, the compiler will escape `[<>\"&']` from output
       to make it suitable for safe embedding in HTML tags and attributes.
@@ -12,14 +15,14 @@
     <prop boolean name="expandBrowserPrefix" default="false">
       Expand CSS rules to include vendor-prefixed declarations.
     </prop>
-    <prop string name="outputBrowserPrefix">
+    <prop opt string name="outputBrowserPrefix">
       The location of the file where to output the prefixed version of the CSS.
       Works only when `expandBrowserPrefix` is set.
       The filename should end with `.css` and the compiler will also create a `.json` file
       at the same location with the map to check for support.
     </prop>
-    <prop type="Array<string>" name="prefixes">
-      Prefixes to include in the output CSS.
+    <prop opt type="!Array<string>" name="prefixes">
+      CSS rule prefixes (`position:sticky`, `-ms-hyphens`.) to include in the main output CSS rather than browser prefix file.
     </prop>
     <prop boolean name="prettyPrint" default="false">
       Whether to format the output with newlines and indents so that it is more readable.
@@ -39,6 +42,9 @@
     <prop string name="cssRenamingPrefix" opt>
       Add a prefix to all renamed css class names.
     </prop>
+    <prop type="!Array<string>" name="whitelist" opt>
+      Excluded classes from renaming.
+    </prop>
     <prop string name="outputRenamingMap" opt>
       How to format the output from the CSS class renaming.
     </prop>
@@ -53,5 +59,22 @@
     <prop type="!Array<string>" name="excludedClassesFromRenaming" opt>
       Pass the compiler a list of CSS class names that shouldn't be renamed.
     </prop>
-  </type>
+  </record>
+  <record name="ClosureReturn" desc="Returns stylesheet and rename map if successful, or parsed info, stderr and status otherwise.">
+    <prop string opt name="block">
+      Parsed error information with CLI colour.
+    </prop>
+    <prop string opt name="stderr">
+      Full stderr output in case of error.
+    </prop>
+    <prop number opt name="status">
+      Exit error code.
+    </prop>
+    <prop opt type="Object" name="renameMap">
+      If renaming was on, this is the generated map parsed into an object.
+    </prop>
+    <prop opt string name="stylesheet">
+      The actual compiled stylesheet in case of success.
+    </prop>
+  </record>
 </types>

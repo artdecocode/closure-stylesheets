@@ -1,13 +1,11 @@
 <types ns="_artdeco">
-  <method name="compileStylesheetsSync" return="{ renameMap: Object, stylesheet: string }">
-    <arg type="string|!Array<string>" name="css">
+  <method name="compileStylesheetsSync" return="_artdeco.ClosureReturn">
+    <arg type="(string|!Array<string>)" name="css">
       The resolved path to the CSS file to compile.
     </arg>
-    <arg opt type="string?" name="rootSelector">
-      The parent class name.
-    </arg>
-    <arg opt type="_artdeco.ClosureStylesheetsConfig" name="config">
+    <arg type="!_artdeco.ClosureStylesheetsConfig" name="config">
       Additional configuration to transform into arguments to Java.
+      Requires at list path to the JAR file.
     </arg>
     <arg opt type="!Function" name="log">
       The logging function.
@@ -15,15 +13,13 @@
     Compiles stylesheets in a sync manner.
   </method>
 
-  <method async name="compileStylesheets" return="{ renameMap: Object, stylesheet: string }">
-    <arg type="string|!Array<string>" name="css">
+  <method async name="compileStylesheets" return="_artdeco.ClosureReturn">
+    <arg type="(string|!Array<string>)" name="css">
       The resolved path to the CSS file to compile.
     </arg>
-    <arg opt type="string?" name="rootSelector">
-      The parent class name.
-    </arg>
-    <arg opt type="_artdeco.ClosureStylesheetsConfig" name="config">
+    <arg type="!_artdeco.ClosureStylesheetsConfig" name="config">
       Additional configuration to transform into arguments to Java.
+      Requires at list path to the JAR file.
     </arg>
     <arg opt type="!Function" name="log">
       The logging function.

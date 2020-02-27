@@ -4,11 +4,14 @@ import { c } from 'erte'
 
 /**
  * Checks config and returns arguments.
- * @param {string|string[]} css The resolved path to the CSS file to compile.
- * @param {string?} [rootSelector] The parent class name.
- * @param {ClosureStylesheetsConfig} [config]
+ * @param {string|!Array<string>} css The resolved path to the CSS file to compile.
+ * @param {!_artdeco.ClosureStylesheetsConfig} config Configuration.
+ * @param {!Function} log
  */
-export const prepareArgs = (css, rootSelector, config, log = console.log) => {
+export const prepareArgs = (css, config, log = console.log) => {
+  if (typeof config != 'object') throw new Error('Config is expected as an object.')
+  const { rootSelector, path } = config
+  if (!path) throw new Error('Path to closure stylesheets JAR wasn\'t passed.')
   if (rootSelector && !/^[.#]/.test(rootSelector)) {
     throw new Error(`The root selector (${rootSelector}) must be either a class name or an ID.`)
   }
@@ -17,8 +20,7 @@ export const prepareArgs = (css, rootSelector, config, log = console.log) => {
 
   // this is a temp file
   let outputRenamingMap
-  const { whitelist, rename = 'SIMPLE', path } = config
-  if (!path) throw new Error('Path to closure stylesheets JAR wasn\'t passed.')
+  const { whitelist, rename = 'SIMPLE' } = config
 
   if (rename) outputRenamingMap = 'temp-rename-map' + '.json'
   const closureArgs = getArgs({
@@ -38,7 +40,7 @@ export const prepareArgs = (css, rootSelector, config, log = console.log) => {
 
   /**
    * Returns the rename map, or null after compilation.
-   * @param {Object}
+   * @return {Object}
    */
   const getMap = () => {
     if (outputRenamingMap) {
@@ -56,7 +58,7 @@ export const prepareArgs = (css, rootSelector, config, log = console.log) => {
 
 /**
  * Transforms config into options.
- * @param {ClosureStylesheetsConfig} config
+ * @param {!_artdeco.ClosureStylesheetsConfig} config
  */
 const getArgs = (config) => {
   const args = []
@@ -130,3 +132,8 @@ export const parseStatus = (stderr) => {
     }
   }
 }
+
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('..').ClosureStylesheetsConfig} _artdeco.ClosureStylesheetsConfig
+ */

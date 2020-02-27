@@ -2,5 +2,9 @@
   "_artdeco.ClosureStylesheetsConfig": {
     "link": "https://github.com/artdecocode/closure-stylesheets#type-closurestylesheetsconfig",
     "description": null
+  },
+  "_artdeco.ClosureReturn": {
+    "link": "https://github.com/artdecocode/closure-stylesheets#type-closurereturn",
+    "description": "Returns stylesheet and rename map if successful, or parsed info, stderr and status otherwise."
   }
 }
