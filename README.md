@@ -12,10 +12,10 @@ yarn add closure-stylesheets
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`async compileStylesheets(css: (string|!Array<string>), config: !ClosureStylesheetsConfig, log=: !Function): ClosureReturn`](#async-compilestylesheetscss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn)
+- [`async compileStylesheets(css, config, log=): ClosureReturn`](#async-compilestylesheetscss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn)
   * [`ClosureStylesheetsConfig`](#type-closurestylesheetsconfig)
   * [`ClosureReturn`](#type-closurereturn)
-- [`compileStylesheetsSync(css: (string|!Array<string>), config: !ClosureStylesheetsConfig, log=: !Function): ClosureReturn`](#compilestylesheetssynccss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn)
+- [`compileStylesheetsSync(css, config, log=): ClosureReturn`](#compilestylesheetssynccss-stringarraystringconfig-closurestylesheetsconfiglog-function-closurereturn)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents">
