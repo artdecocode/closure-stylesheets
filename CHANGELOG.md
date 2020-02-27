@@ -1,5 +1,9 @@
 ## 27 February 2020
 
+### [1.0.1](https://github.com/artdecocode/closure-stylesheets/compare/v1.0.0...v1.0.1)
+
+- [fix] Publish `compile` folder.
+
 ### [1.0.0](https://github.com/artdecocode/closure-stylesheets/compare/v0.0.0...v1.0.0)
 
 - [package] Publish `v1` of the package.
