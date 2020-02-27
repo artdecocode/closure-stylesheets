@@ -2,7 +2,7 @@
 
 %NPM: closure-stylesheets%
 
-`closure-stylesheets` is A Fork Of Google Closure Stylesheets With Improvements.
+`closure-stylesheets` is A Node API to Closure Stylesheets.
 
 ```sh
 yarn add closure-stylesheets

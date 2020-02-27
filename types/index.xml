@@ -1,10 +1,57 @@
-<types namespace="_closure-stylesheets">
-  <type name="Config" desc="Options for the program.">
-    <prop boolean name="shouldRun" default="true">
-      A boolean option.
+<types ns="_artdeco">
+  <type name="ClosureStylesheetsConfig">
+    <prop string name="path">
+      The path to the closure JAR. You can use `closure-stylesheets-java` package
+      to install it via Node.
     </prop>
-    <prop string name="text">
-      A text to return.
+    <prop boolean name="skipHTMLEscaping" default="false">
+      By default, the compiler will escape `[<>\"&']` from output
+      to make it suitable for safe embedding in HTML tags and attributes.
+      When standalone CSS is generated, this is not necessary and can be skipped.
+    </prop>
+    <prop boolean name="expandBrowserPrefix" default="false">
+      Expand CSS rules to include vendor-prefixed declarations.
+    </prop>
+    <prop string name="outputBrowserPrefix">
+      The location of the file where to output the prefixed version of the CSS.
+      Works only when `expandBrowserPrefix` is set.
+      The filename should end with `.css` and the compiler will also create a `.json` file
+      at the same location with the map to check for support.
+    </prop>
+    <prop type="Array<string>" name="prefixes">
+      Prefixes to include in the output CSS.
+    </prop>
+    <prop boolean name="prettyPrint" default="false">
+      Whether to format the output with newlines and indents so that it is more readable.
+    </prop>
+    <prop string name="sourceMap" opt>
+      Provides a mapping from the generated output to their original source code location.
+    </prop>
+    <prop string name="rootSelector" opt>
+      The string to prepend to selectors of each ruleset.
+    </prop>
+    <prop boolean name="allowUnrecognizedProperties" default="false">
+      Allow unrecognized properties.
+    </prop>
+    <prop boolean name="preserveImportantComments" default="false">
+      Preserve important comments from sources into minified output css. Important comments are marked with `/＊! ＊/`, `＠license`, or `＠preserve`.
+    </prop>
+    <prop string name="cssRenamingPrefix" opt>
+      Add a prefix to all renamed css class names.
+    </prop>
+    <prop string name="outputRenamingMap" opt>
+      How to format the output from the CSS class renaming.
+    </prop>
+    <prop string name="inputRenamingMap" opt>
+      The input filename for the CSS class renaming. The file must provide a map of class names that will be used for renaming. If a class name is not found in file, a new name will be generated.
+      `--input-renaming-map`
+    </prop>
+    <prop string name="rename" opt>
+      How CSS classes should be renamed. Defaults to NONE.
+      Can be `CLOSURE`, `SIMPLE`, `DEBUG`.
+    </prop>
+    <prop type="!Array<string>" name="excludedClassesFromRenaming" opt>
+      Pass the compiler a list of CSS class names that shouldn't be renamed.
     </prop>
   </type>
 </types>

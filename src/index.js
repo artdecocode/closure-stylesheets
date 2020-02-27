@@ -1,31 +1,44 @@
-import { debuglog } from 'util'
-
-const LOG = debuglog('closure-stylesheets')
+import { spawnSync } from 'child_process'
+import spawn from 'spawncommand'
+import { prepareArgs, parseStatus } from './lib'
 
 /**
- * A Fork Of Google Closure Stylesheets With Improvements.
- * @param {_closure-stylesheets.Config} [config] Options for the program.
- * @param {boolean} [config.shouldRun=true] A boolean option. Default `true`.
- * @param {string} config.text A text to return.
+ * @type {}
  */
-export default async function closureStylesheets(config = {}) {
-  const {
-    shouldRun = true,
-    text,
-  } = config
-  if (!shouldRun) return
-  LOG('closure-stylesheets called with %s', text)
-  return text
+export function compileStylesheetsSync(css, rootSelector, config = {}, log = console.log) {
+  const { args, getMap } = prepareArgs(css, rootSelector, config, log)
+  let { stderr, stdout: stylesheet, status } = spawnSync('java', args, {
+    shell: true,
+  })
+  stderr = stderr.toString()
+  stylesheet = stylesheet.toString()
+
+  if (status) {
+    const block = parseStatus(stderr)
+    return { status, stderr, block }
+  }
+  const renameMap = getMap()
+
+  return { renameMap, stylesheet }
 }
 
-/* documentary types/index.xml */
 /**
- * @suppress {nonStandardJsDocs}
- * @typedef {_closure-stylesheets.Config} Config Options for the program.
+ *
  */
-/**
- * @suppress {nonStandardJsDocs}
- * @typedef {Object} _closure-stylesheets.Config Options for the program.
- * @prop {boolean} [shouldRun=true] A boolean option. Default `true`.
- * @prop {string} text A text to return.
- */
+async function compileStylesheets(css, rootSelector, config = {}, log = console.log) {
+  const { args, getMap } = prepareArgs(css, rootSelector, config, log)
+  const { promise } = spawn('java', args, {
+    shell: true,
+  })
+  const { stderr, stdout: stylesheet, code } = await promise
+
+  if (code) {
+    const block = parseStatus(stderr)
+    return { status: code, stderr, block }
+  }
+  const renameMap = getMap()
+
+  return { renameMap, stylesheet }
+}
+
+export default compileStylesheets

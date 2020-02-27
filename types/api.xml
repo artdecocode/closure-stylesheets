@@ -1,0 +1,33 @@
+<types ns="_artdeco">
+  <method name="compileStylesheetsSync" return="{ renameMap: Object, stylesheet: string }">
+    <arg type="string|!Array<string>" name="css">
+      The resolved path to the CSS file to compile.
+    </arg>
+    <arg opt type="string?" name="rootSelector">
+      The parent class name.
+    </arg>
+    <arg opt type="_artdeco.ClosureStylesheetsConfig" name="config">
+      Additional configuration to transform into arguments to Java.
+    </arg>
+    <arg opt type="!Function" name="log">
+      The logging function.
+    </arg>
+    Compiles stylesheets in a sync manner.
+  </method>
+
+  <method async name="compileStylesheets" return="{ renameMap: Object, stylesheet: string }">
+    <arg type="string|!Array<string>" name="css">
+      The resolved path to the CSS file to compile.
+    </arg>
+    <arg opt type="string?" name="rootSelector">
+      The parent class name.
+    </arg>
+    <arg opt type="_artdeco.ClosureStylesheetsConfig" name="config">
+      Additional configuration to transform into arguments to Java.
+    </arg>
+    <arg opt type="!Function" name="log">
+      The logging function.
+    </arg>
+    Compiles stylesheets asynchronously.
+  </method>
+</types>

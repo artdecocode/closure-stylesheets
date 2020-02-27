@@ -3,23 +3,22 @@
 The package is available by importing its default function:
 
 ```js
-import closureStylesheets from 'closure-stylesheets'
+import closureStylesheets, { closureStylesheetsSync } from 'closure-stylesheets'
 ```
 
 %~%
 
-```## closureStylesheets
-[
-  ["arg1", "string"],
-  ["arg2?", "boolean"]
-]
-```
-
-Call this function to get the result you want.
+<typedef name="closureStylesheets">types/api.xml</typedef>
 
 %TYPEDEF types/index.xml%
 
-%EXAMPLE: example, ../src => closure-stylesheets%
-%FORK example%
+The sync version with the same API is also available.
+
+%~%
+
+<typedef name="closureStylesheetsSync">types/api.xml</typedef>
+
+<!-- %EXAMPLE: example, ../src => closure-stylesheets%
+%FORK example% -->
 
 %~%
