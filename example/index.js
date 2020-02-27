@@ -1,9 +1,10 @@
-/* alanode example/ */
-import closureStylesheets from '../src'
+import compileStylesheets from '../'
+import path from 'closure-stylesheets-java'
 
 (async () => {
-  const res = await closureStylesheets({
-    text: 'example',
-  })
+  const res = await compileStylesheets('example/style.css', {
+    path,
+    rootSelector: '.Example',
+  }, console.error)
   console.log(res)
 })()

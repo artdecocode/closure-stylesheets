@@ -3,7 +3,7 @@ const { _compileStylesheets, _compileStylesheetsSync } = require('./closure-styl
 /**
  * Compiles stylesheets asynchronously.
  * @param {(string|!Array<string>)} css The resolved path to the CSS file to compile.
- * @param {!_artdeco.ClosureStylesheetsConfig} config
+ * @param {!_artdeco.ClosureStylesheetsConfig} config Configuration options.
  * @param {string} config.path The path to the closure JAR. You can use `closure-stylesheets-java` package
  * to install it via Node.
  * @param {boolean} [config.skipHTMLEscaping=false] By default, the compiler will escape `[<>\"&']` from output
@@ -32,14 +32,14 @@ Requires at list path to the JAR file.
  * @param {!Function=} [log] The logging function.
  * @return {Promise<_artdeco.ClosureReturn>}
  */
-function compileStylesheets(css, rootSelector, config, log) {
-  return _compileStylesheets(css, rootSelector, config, log)
+function compileStylesheets(css, config, log) {
+  return _compileStylesheets(css, config, log)
 }
 
 /**
  * Compiles stylesheets in a sync manner.
  * @param {(string|!Array<string>)} css The resolved path to the CSS file to compile.
- * @param {!_artdeco.ClosureStylesheetsConfig} config
+ * @param {!_artdeco.ClosureStylesheetsConfig} config Configuration options.
  * @param {string} config.path The path to the closure JAR. You can use `closure-stylesheets-java` package
  * to install it via Node.
  * @param {boolean} [config.skipHTMLEscaping=false] By default, the compiler will escape `[<>\"&']` from output
@@ -68,8 +68,8 @@ Requires at list path to the JAR file.
  * @param {!Function=} [log] The logging function.
  * @return {_artdeco.ClosureReturn}
  */
-function compileStylesheetsSync(css, rootSelector, config, log) {
-  return _compileStylesheetsSync(css, rootSelector, config, log)
+function compileStylesheetsSync(css, config, log) {
+  return _compileStylesheetsSync(css, config, log)
 }
 
 module.exports = compileStylesheets
@@ -77,8 +77,8 @@ module.exports.compileStylesheetsSync = compileStylesheetsSync
 
 /* typal types/index.xml namespace */
 /**
- * @typedef {_artdeco.ClosureStylesheetsConfig} ClosureStylesheetsConfig `＠record`
- * @typedef {Object} _artdeco.ClosureStylesheetsConfig `＠record`
+ * @typedef {_artdeco.ClosureStylesheetsConfig} ClosureStylesheetsConfig `＠record` Configuration options.
+ * @typedef {Object} _artdeco.ClosureStylesheetsConfig `＠record` Configuration options.
  * @prop {string} path The path to the closure JAR. You can use `closure-stylesheets-java` package
  * to install it via Node.
  * @prop {boolean} [skipHTMLEscaping=false] By default, the compiler will escape `[<>\"&']` from output

@@ -3,15 +3,15 @@ const { _compileStylesheets, _compileStylesheetsSync } = require('./closure-styl
 /**
  * @methodType {_artdeco.compileStylesheets}
  */
-function compileStylesheets(css, rootSelector, config, log) {
-  return _compileStylesheets(css, rootSelector, config, log)
+function compileStylesheets(css, config, log) {
+  return _compileStylesheets(css, config, log)
 }
 
 /**
  * @methodType {_artdeco.compileStylesheetsSync}
  */
-function compileStylesheetsSync(css, rootSelector, config, log) {
-  return _compileStylesheetsSync(css, rootSelector, config, log)
+function compileStylesheetsSync(css, config, log) {
+  return _compileStylesheetsSync(css, config, log)
 }
 
 module.exports = compileStylesheets

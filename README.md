@@ -294,6 +294,39 @@ __<a name="type-closurereturn">`ClosureReturn`</a>__: Returns stylesheet and ren
  </tr>
 </table>
 
+_For example, we can compile this simple stylesheet:_
+
+```css
+.MyElement {
+  color: green;
+}
+```
+
+```js
+import compileStylesheets from 'closure-stylesheets'
+import path from 'closure-stylesheets-java'
+
+(async () => {
+  const res = await compileStylesheets('example/style.css', {
+    path,
+    rootSelector: '.Example',
+  }, console.error)
+  console.log(res)
+})()
+```
+```js
+{
+  renameMap: { MyElement: 'a' },
+  stylesheet: '.Example .a{color:green}'
+}
+```
+
+Logging of the executed command will be done into `console.error` since it was passed as the third argument.
+
+```
+java -jar /Users/zavr/node_modules/closure-stylesheets-java/target/closure-stylesheets-1.12.1-SNAPSHOT-jar-with-dependencies.jar "example/style.css" --root-selector .Example --output-renaming-map temp-rename-map.json --output-renaming-map-format JSON --rename SIMPLE
+```
+
 The sync version with the same API is also available.
 
 <p align="center"><a href="#table-of-contents">
@@ -307,6 +340,21 @@ Compiles stylesheets in a sync manner.
  - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-closurestylesheetsconfig" title="Configuration options.">!ClosureStylesheetsConfig</a></code></em>: Additional configuration to transform into arguments to Java.
 Requires at list path to the JAR file.
  - <kbd>log</kbd> <em>`!Function`</em> (optional): The logging function.
+
+```js
+import { compileStylesheetsSync } from 'closure-stylesheets'
+import path from 'closure-stylesheets-java'
+
+const resSync = compileStylesheetsSync('example/style.css', {
+  path,
+  rootSelector: '.HelloWorld',
+  whitelist: ['MyElement'],
+}, console.error)
+console.log(resSync)
+```
+```js
+{ renameMap: {}, stylesheet: '.HelloWorld .MyElement{color:green}' }
+```
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/3.svg?sanitize=true">

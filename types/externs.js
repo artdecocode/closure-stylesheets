@@ -7,6 +7,7 @@
 /** @const */
 var _artdeco = {}
 /**
+ * Configuration options.
  * @record
  */
 _artdeco.ClosureStylesheetsConfig
