@@ -1,6 +1,6 @@
 {
   "name": "closure-stylesheets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Node API to Closure Stylesheets.",
   "main": "compile/index.js",
   "module": "src/index.js",
