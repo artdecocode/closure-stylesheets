@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import { unlinkSync } from 'fs'
 import { c } from 'erte'
+import { EOL } from 'os'
 
 /**
  * Checks config and returns arguments.
@@ -99,34 +100,48 @@ const getArgs = (config) => {
   return args
 }
 
+const fixLineCol = (s) => {
+  return s.replace(/ at line ([\d,]+) column ([\d,]+):/g, (m, line, col) => {
+    const ln = line.replace(/[^\d]/, '')
+    const cl = col.replace(/[^\d]/, '')
+    return `:${ln}:${cl}`
+  })
+}
+
 /**
  * If Closure Stylesheets exited with non-zero status, parses the error.
  * @param {string} stderr
  */
 export const parseStatus = (stderr) => {
-  const e = stderr.split('\n')
+  const e = stderr.split(/\r?\n/)
   if (e[0].startsWith('Compiler parsing error: Parse error')) {
     const line = e[4]
     // const line = name
     const parsed = /at line ([\d,]+) column ([\d,]+)/.exec(line)
+    // const file = / in (\S+) /.exec(line)
     if (parsed) {
       let [, l, col] = parsed
+      // const [, path] = file
       l = parseInt(l.replace(/,/g, ''), 10)
       col = parseInt(col.replace(/,/g, ''), 10)
-      const source = e[5]
+      const C = col - 1
+      // const fileLines = readFileSync(path, 'utf8').split(/\r?\n/)
+      const sourceLine = e[5]
       /** @type {string} */
-      const sourceLine = source.split('\n')[l - 1]
-      const pre = sourceLine.slice(Math.max(0, col - 20), col)
-      const act = sourceLine.slice(col, col + 20)
-      const post = sourceLine.slice(col + 20, col +
+      // const sourceLine = source.split('\n')[l - 1]
+      const pre = sourceLine.slice(Math.max(0, col - 20), C)
+      const act = sourceLine.slice(C, C + 20)
+      const post = sourceLine.slice(C + 20, C +
         (process.stdout.columns ? process.stdout.columns - 42 : 100))
-      const p = '\n' + ' '.repeat(20) + '^'
+      const p = EOL + ' '.repeat(19) + '^'
       const block = [
+        fixLineCol(e[0]),
+        EOL, EOL,
         c(pre, 'grey'),
         c(act, 'red'),
         c(post, 'grey'),
         p,
-        e.slice(7).join('\n'),
+        e.slice(7).filter(s => !/at com.google/.test(s)).join(EOL),
       ].join('')
       return block
     }

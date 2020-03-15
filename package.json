@@ -46,7 +46,8 @@
   },
   "homepage": "https://www.artd.eco",
   "devDependencies": {
-    "alamode": "^3.5.2",
+    "alamode": "^3.7.1",
+    "bulma": "^0.8.0",
     "depack": "^1.1.2",
     "documentary": "^1.37.1",
     "erte": "^1.2.0",
